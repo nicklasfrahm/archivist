@@ -89,7 +89,7 @@ def info_func(args):
     global threads
 
     try:
-        walk_tree(args.dir, info_file, info_dir)
+        walk_tree(args.folder, info_file, info_dir)
 
         for t in threads:
             t.join()
@@ -109,7 +109,7 @@ def unzip_func(args):
 
             # Scan once or continously if the watch mode is enabled.
             if args.watch or scan:
-                for pathname in os.listdir(args.dir):
+                for pathname in os.listdir(args.folder):
                     segments = pathname.rsplit(".", 1)
 
                     if len(segments) == 2:
@@ -139,7 +139,7 @@ def unzip_func(args):
 
 if __name__ == "__main__":
     # Basic information about the program.
-    prog = "archivist.py"
+    prog = "cli.py"
     description = "Process large amounts of files and folders."
 
     # Scaffolding for the command line interface.
@@ -148,16 +148,18 @@ if __name__ == "__main__":
     cli_subparsers = cli.add_subparsers(help="Display subcommand help.")
 
     # The info subcommand.
-    cli_info = cli_subparsers.add_parser("info", help="Analyse the directory.")
-    cli_info.add_argument("dir", nargs="?", default=".", help="Directory to analyse.")
-    cli_info.set_defaults(func=info_func)
+    # cli_info = cli_subparsers.add_parser("info", help="Analyse the directory.")
+    # cli_info.add_argument(
+    #     "folder", nargs="?", default=".", help="Directory to analyse."
+    # )
+    # cli_info.set_defaults(func=info_func)
 
     # The unzip subcommand.
     cli_unzip = cli_subparsers.add_parser(
         "unzip", help="Extract all archives from folder."
     )
     cli_unzip.add_argument(
-        "dir", nargs="?", default=".", help="Folder with archives to process."
+        "folder", nargs="?", default=".", help="Folder with archives to process."
     )
     cli_unzip.add_argument(
         "-o",
