@@ -104,14 +104,14 @@ if __name__ == "__main__":
         "-o",
         default="out",
         help="Folder to unzip archives to.",
-        metavar="out_dir",
+        metavar="OUT",
         dest="out",
     )
     cli_unzip.add_argument(
         "-d",
         default="done",
         help="Folder for processed archives.",
-        metavar="done_dir",
+        metavar="DONE",
         dest="done",
     )
     cli_unzip.add_argument(
