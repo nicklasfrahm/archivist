@@ -40,16 +40,20 @@ def unzip_func(args):
 
     unzip = Unzipper(args.folder, args.out, args.done)
     scanned = False
+    detected = 0
 
     try:
         while True:
             # Scan once or continuously if the watch mode is enabled.
             if args.watch or not scanned:
-                unzip.scan()
-                scanned = False
+                detected = unzip.scan()
+                scanned = True
 
             # Check if all archives have been unzipped.
             if not args.watch and unzip.idle():
+                if detected > 0:
+                    clear()
+                stdout.write(f"Processed archives: {detected}\n")
                 return
 
             # Print progress to screen.

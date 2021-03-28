@@ -131,6 +131,8 @@ class Unzipper:
 
     def scan(self):
         """Scan files in input folder and start new unzip workers for every archive found."""
+        detected = 0
+
         for pathname in listdir(self.dir_in):
             segments = pathname.rsplit(".", 1)
             statinfo = stat(pathname)
@@ -138,4 +140,7 @@ class Unzipper:
             if S_ISREG(statinfo.st_mode) and len(segments) == 2:
                 extension = segments[1].lower()
                 if extension == "zip":
+                    detected += 1
                     self.spawn(pathname)
+
+        return detected
